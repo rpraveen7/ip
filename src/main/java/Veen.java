@@ -10,6 +10,17 @@ public class Veen {
     public static int totalTasks = 0;
 
     public static void main(String[] args) {
+        String logo = " __     __  ________  ________  __    __ \n"
+                + "|  \\   |  \\|        \\|        \\|  \\  |  \\\n"
+                + "| \\\\   | \\\\| $$$$$$$$| $$$$$$$$| $$\\ | $$\n"
+                + "| $$   | $$| $$__    | $$__    | $$$\\| $$\n"
+                + " \\$$\\ /  $$| $$  \\   | $$  \\   | $$$$\\ $$\n"
+                + "  \\$$\\  $$ | $$$$$   | $$$$$   | $$ \\$$$$\n"
+                + "   \\$$ $$  | $$_____ | $$_____ | $$  \\$$$\n"
+                + "    \\$$$   | $$     \\| $$     \\| $$   \\$$\n"
+                + "     \\$     \\$$$$$$$$ \\$$$$$$$$ \\$$    \\$$\n";
+        System.out.print(logo);
+
         Scanner scanner = new Scanner(System.in);
         printWelcomeMessage();
 

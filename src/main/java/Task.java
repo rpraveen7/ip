@@ -22,6 +22,5 @@ public class Task {
     public void markAsUndone() {
         this.isDone = false;
     }
-
 }
 
