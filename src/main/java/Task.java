@@ -4,7 +4,7 @@ public class Task {
 
     public Task(String description) {
         this.description = description;
-        isDone = false;
+        this.isDone = false;
     }
 
     public String getDescription() {
@@ -12,15 +12,23 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        // mark done task with X
+        return (isDone ? "X" : " ");
     }
 
-    public void markAsDone() { //each task needs its own status so cannot be static
+    public void markAsDone() {
+        //each task needs its own status so cannot be static
         this.isDone = true;
     }
 
     public void markAsUndone() {
         this.isDone = false;
+    }
+
+    // Override toString to return the string representation of the object
+    @Override
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + description;
     }
 }
 
