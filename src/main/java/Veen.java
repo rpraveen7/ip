@@ -11,10 +11,13 @@ public class Veen {
     private static final String LIST_COMMAND = "list";
     private static final String MARK_COMMAND = "mark";
     private static final String UNMARK_COMMAND = "unmark";
+    private static final String TODO_COMMAND = "todo";
+    private static final String DEADLINE_COMMAND = "deadline";
+    private static final String EVENT_COMMAND = "event";
 
     // Application state
     private static final int MAX_TASKS = 100;
-    public static Task[] taskList = new Task[MAX_TASKS];
+    public static Task[] tasks = new Task[MAX_TASKS];
     public static int totalTasks = 0;
 
     public static void main(String[] args) {
@@ -60,6 +63,15 @@ public class Veen {
         case UNMARK_COMMAND:
             unmarkTask(arguments);
             return true;
+        case TODO_COMMAND:
+            addTaskAsTodo(arguments);
+            return true;
+        case DEADLINE_COMMAND:
+            addTaskAsDeadline(arguments);
+            return true;
+        case EVENT_COMMAND:
+            addTaskAsEvent(arguments);
+            return true;
         default:
             // if none of the above, its a new task
             addTask(input);
@@ -67,20 +79,68 @@ public class Veen {
         }
     }
 
-    private static void addTask(String description) {
-        if (totalTasks >= taskList.length) {
-            System.out.println("Task list is full!");
+    private static void addTaskAsTodo(String description) {
+        checkTaskLimit(totalTasks);
+
+        tasks[totalTasks] = new Todo(description);
+        echoTask(tasks[totalTasks]);
+        totalTasks++;
+    }
+
+    private static void addTaskAsDeadline(String arguments) {
+        checkTaskLimit(totalTasks);
+
+        String[] parts = arguments.split("/by", 2);
+
+        // Incase the user forgot the date
+        if (parts.length < 2) {
+            System.out.println("Error: Deadline needs a date! (e.g., deadline return book /by Sunday)");
             return;
         }
 
-        taskList[totalTasks] = new Task(description);
-        echoTask(taskList[totalTasks]);
+        String description = parts[0].trim();
+        String by = parts[1].trim();
+
+        tasks[totalTasks] = new Deadline(description, by);
+        echoTask(tasks[totalTasks]);
+        totalTasks++;
+
+    }
+
+    private static void addTaskAsEvent(String arguments) {
+        checkTaskLimit(totalTasks);
+
+        int fromIndex = arguments.indexOf("/from");
+        int toIndex = arguments.indexOf("/to");
+
+        if (fromIndex == -1 || toIndex == -1) {
+            System.out.println("Error: Event needs both /from and /to");
+            return;
+        }
+
+        String description = arguments.substring(0, fromIndex).trim();
+        String from = arguments.substring(fromIndex + 5, toIndex).trim();
+        String to = arguments.substring(toIndex + 3).trim();
+
+        tasks[totalTasks] = new Event(description, from, to);
+        echoTask(tasks[totalTasks]);
+        totalTasks++;
+
+    }
+
+    private static void addTask(String description) {
+        checkTaskLimit(totalTasks);
+
+        tasks[totalTasks] = new Task(description);
+        echoTask(tasks[totalTasks]);
         totalTasks++;
     }
 
     private static void echoTask(Task task) {
         System.out.println(DIVIDER);
-        System.out.println("added: " + task.getDescription());
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task);
+        System.out.println("Now you have " + (totalTasks + 1) + " tasks in the list.");
         System.out.println(DIVIDER);
     }
 
@@ -89,7 +149,7 @@ public class Veen {
         System.out.println(TASKS_MESSAGE);
         for(int i = 0; i < totalTasks; i++) {
             // cleaner code due to overriding toString
-            System.out.println((i + 1) + "." + taskList[i]);
+            System.out.println((i + 1) + "." + tasks[i]);
         }
         System.out.println(DIVIDER);
     }
@@ -98,10 +158,10 @@ public class Veen {
         int taskNumber  = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
 
-        taskList[arrayIndex].markAsDone();
+        tasks[arrayIndex].markAsDone();
         System.out.println(DIVIDER);
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println(" " + taskList[arrayIndex]);
+        System.out.println(" " + tasks[arrayIndex]);
         System.out.println(DIVIDER);
     }
 
@@ -109,10 +169,10 @@ public class Veen {
         int taskNumber = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
 
-        taskList[arrayIndex].markAsUndone();
+        tasks[arrayIndex].markAsUndone();
         System.out.println(DIVIDER);
         System.out.println("Okay, I've marked this task as not done yet:");
-        System.out.println(" " + taskList[arrayIndex]);
+        System.out.println(" " + tasks[arrayIndex]);
         System.out.println(DIVIDER);
     }
 
@@ -140,6 +200,13 @@ public class Veen {
         System.out.println(DIVIDER);
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(DIVIDER);
+    }
+
+    private static void checkTaskLimit(int totalTasks) {
+        if (totalTasks >= tasks.length) {
+            System.out.println("Task list is full!");
+            return;
+        }
     }
 
 }
