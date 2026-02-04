@@ -17,9 +17,10 @@ public class Veen {
 
     // Application state
     private static final int MAX_TASKS = 100;
-    public static Task[] tasks = new Task[MAX_TASKS];
-    public static int totalTasks = 0;
+    private static Task[] tasks = new Task[MAX_TASKS];
+    private static int totalTasks = 0;
 
+    // Main
     public static void main(String[] args) {
         showWelcomeMessage();
         printWelcomeMessage();
@@ -74,21 +75,27 @@ public class Veen {
             return true;
         default:
             // if none of the above, its a new task
-            addTask(input);
+            System.out.println("BROOOO!! What is thaaaat? You forgetting something?");
             return true;
         }
     }
 
+    // Description added for Todo task
     private static void addTaskAsTodo(String description) {
-        checkTaskLimit(totalTasks);
+        if (isTasksFull(totalTasks)) {
+            return;
+        }
 
         tasks[totalTasks] = new Todo(description);
         echoTask(tasks[totalTasks]);
         totalTasks++;
     }
 
+    // Description added for Deadline task
     private static void addTaskAsDeadline(String arguments) {
-        checkTaskLimit(totalTasks);
+        if (isTasksFull(totalTasks)) {
+            return;
+        }
 
         String[] parts = arguments.split("/by", 2);
 
@@ -107,8 +114,11 @@ public class Veen {
 
     }
 
+    // Description added for Event task
     private static void addTaskAsEvent(String arguments) {
-        checkTaskLimit(totalTasks);
+        if (isTasksFull(totalTasks)) {
+            return;
+        }
 
         int fromIndex = arguments.indexOf("/from");
         int toIndex = arguments.indexOf("/to");
@@ -128,14 +138,18 @@ public class Veen {
 
     }
 
+    // Description for normal task
     private static void addTask(String description) {
-        checkTaskLimit(totalTasks);
+        if (isTasksFull(totalTasks)) {
+            return;
+        }
 
         tasks[totalTasks] = new Task(description);
         echoTask(tasks[totalTasks]);
         totalTasks++;
     }
 
+    // Message used for when Task added
     private static void echoTask(Task task) {
         System.out.println(DIVIDER);
         System.out.println("Got it. I've added this task:");
@@ -144,6 +158,7 @@ public class Veen {
         System.out.println(DIVIDER);
     }
 
+    // Printing of task when list command input
     private static void printTasks() {
         System.out.println(DIVIDER);
         System.out.println(TASKS_MESSAGE);
@@ -154,6 +169,7 @@ public class Veen {
         System.out.println(DIVIDER);
     }
 
+    // Mark the Task with X
     private static void markTask(String argument) {
         int taskNumber  = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
@@ -165,6 +181,7 @@ public class Veen {
         System.out.println(DIVIDER);
     }
 
+    // Remove the X from the Task
     private static void unmarkTask(String argument) {
         int taskNumber = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
@@ -176,6 +193,7 @@ public class Veen {
         System.out.println(DIVIDER);
     }
 
+    // Welcome message spelling out "Veen"
     private static void showWelcomeMessage() {
         String logo = " __     __  ________  ________  __    __ \n"
                 + "|  \\   |  \\|        \\|        \\|  \\  |  \\\n"
@@ -202,11 +220,13 @@ public class Veen {
         System.out.println(DIVIDER);
     }
 
-    private static void checkTaskLimit(int totalTasks) {
+    // Function to prevent out of bounds error
+    private static boolean isTasksFull(int totalTasks) {
         if (totalTasks >= tasks.length) {
             System.out.println("Task list is full!");
-            return;
+            return true;
         }
+        return false;
     }
 
 }
