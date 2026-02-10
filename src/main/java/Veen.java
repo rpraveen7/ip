@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Veen {
 
     // Constants to avoid magic literals
-    private static final String DIVIDER = "_______________________________________";
+    private static final String DIVIDER = "____________________________________________________________________";
     private static final String TASKS_MESSAGE = "Here are the tasks in your list:";
 
     // Command Constants
@@ -92,20 +92,30 @@ public class Veen {
 
 
     // Description added for Todo task
-    private static void addTaskAsTodo(String description) {
+    private static void addTaskAsTodo(String arguments) throws VeenException {
         if (isTasksFull(totalTasks)) {
             return;
         }
 
-        tasks[totalTasks] = new Todo(description);
+        // to check if user typed anything
+        if (arguments.trim().isEmpty()) {
+            throw new VeenException("The description of a todo cannot be empty la bro.");
+        }
+
+        tasks[totalTasks] = new Todo(arguments);
         echoTask(tasks[totalTasks]);
         totalTasks++;
     }
 
     // Description added for Deadline task
-    private static void addTaskAsDeadline(String arguments) {
+    private static void addTaskAsDeadline(String arguments) throws VeenException {
         if (isTasksFull(totalTasks)) {
             return;
+        }
+
+        // to check if user typed anything
+        if (arguments.trim().isEmpty()) {
+            throw new VeenException("The description of a deadline cannot be empty la bro.");
         }
 
         String[] parts = arguments.split("/by", 2);
@@ -126,17 +136,21 @@ public class Veen {
     }
 
     // Description added for Event task
-    private static void addTaskAsEvent(String arguments) {
+    private static void addTaskAsEvent(String arguments) throws VeenException {
         if (isTasksFull(totalTasks)) {
             return;
+        }
+
+        // to check if user typed anything
+        if (arguments.trim().isEmpty()) {
+            throw new VeenException("The description of an event cannot be empty.");
         }
 
         int fromIndex = arguments.indexOf("/from");
         int toIndex = arguments.indexOf("/to");
 
         if (fromIndex == -1 || toIndex == -1) {
-            System.out.println("Error: Event needs both /from and /to");
-            return;
+            throw new VeenException("eAn event needs BOTH a '/from' and '/to' time, bro.");
         }
 
         String description = arguments.substring(0, fromIndex).trim();
@@ -147,17 +161,6 @@ public class Veen {
         echoTask(tasks[totalTasks]);
         totalTasks++;
 
-    }
-
-    // Description for normal task
-    private static void addTask(String description) {
-        if (isTasksFull(totalTasks)) {
-            return;
-        }
-
-        tasks[totalTasks] = new Task(description);
-        echoTask(tasks[totalTasks]);
-        totalTasks++;
     }
 
     // Message used for when Task added
