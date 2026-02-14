@@ -108,7 +108,7 @@ public class Veen {
             throw new VeenException("The description of a todo cannot be empty la bro.");
         }
 
-        tasks[totalTasks] = new Todo(arguments);
+        tasks[totalTasks] = new Todo(arguments.trim());
         echoTask(tasks[totalTasks]);
         totalTasks++;
     }
