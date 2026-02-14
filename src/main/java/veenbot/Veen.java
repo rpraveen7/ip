@@ -1,4 +1,11 @@
+package veenbot;
+
 import java.util.Scanner;
+
+import veenbot.tasks.Deadline;
+import veenbot.tasks.Event;
+import veenbot.tasks.Task;
+import veenbot.tasks.Todo;
 
 public class Veen {
 
