@@ -150,7 +150,7 @@ public class Veen {
         int toIndex = arguments.indexOf("/to");
 
         if (fromIndex == -1 || toIndex == -1) {
-            throw new VeenException("eAn event needs BOTH a '/from' and '/to' time, bro.");
+            throw new VeenException("An event needs BOTH a '/from' and '/to' time, bro.");
         }
 
         String description = arguments.substring(0, fromIndex).trim();
