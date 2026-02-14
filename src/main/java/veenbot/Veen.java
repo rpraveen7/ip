@@ -194,6 +194,10 @@ public class Veen {
     private static void markTask(String argument) {
         int taskNumber  = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
+        // bound check
+        if(arrayIndex < 0 || arrayIndex >= totalTasks) {
+            throw new VeenException("Bro, task number" + taskNumber + " doesn't exist!");
+        }
 
         tasks[arrayIndex].markAsDone();
         System.out.println(DIVIDER);
@@ -206,6 +210,11 @@ public class Veen {
     private static void unmarkTask(String argument) {
         int taskNumber = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
+
+        // bound check
+        if(arrayIndex < 0 || arrayIndex >= totalTasks) {
+            throw new VeenException("Bro, task number" + taskNumber + " doesn't exist!");
+        }
 
         tasks[arrayIndex].markAsUndone();
         System.out.println(DIVIDER);
