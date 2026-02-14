@@ -97,14 +97,13 @@ public class Veen {
     }
 
 
-
     // Description added for Todo task
     private static void addTaskAsTodo(String arguments) throws VeenException {
         if (isTasksFull(totalTasks)) {
             return;
         }
 
-        // to check if user typed anything
+        // To check if user typed anything
         if (arguments.trim().isEmpty()) {
             throw new VeenException("The description of a todo cannot be empty la bro.");
         }
@@ -120,21 +119,31 @@ public class Veen {
             return;
         }
 
-        // to check if user typed anything
+        // To check if user typed anything
         if (arguments.trim().isEmpty()) {
             throw new VeenException("The description of a deadline cannot be empty la bro.");
         }
 
+        // Splitting the sentence into before /by and after
         String[] parts = arguments.split("/by", 2);
 
-        // Incase the user forgot the date
+        // incase the user forgot the date
         if (parts.length < 2) {
-            System.out.println("Error: Deadline needs a date! (e.g., deadline return book /by Sunday)");
+            System.out.println("Error: Deadline needs /by! (e.g., deadline return book /by Sunday)");
+            System.out.println(DIVIDER);
             return;
         }
 
+        // Splitting the description of deadline and the by
         String description = parts[0].trim();
         String by = parts[1].trim();
+
+        if (description.isEmpty()) {
+            throw new VeenException("The description of a deadline cannot be empty la bro.");
+        }
+        if (by.isEmpty()) {
+            throw new VeenException("Bro, you forgot to specify WHEN the deadline is!");
+        }
 
         tasks[totalTasks] = new Deadline(description, by);
         echoTask(tasks[totalTasks]);
@@ -148,21 +157,40 @@ public class Veen {
             return;
         }
 
-        // to check if user typed anything
+        // To check if user typed anything
         if (arguments.trim().isEmpty()) {
             throw new VeenException("The description of an event cannot be empty.");
         }
 
+        // The indexOf return -1 if the word is not there
         int fromIndex = arguments.indexOf("/from");
         int toIndex = arguments.indexOf("/to");
 
+        // Check if they got indicate /from and /by
         if (fromIndex == -1 || toIndex == -1) {
-            throw new VeenException("An event needs BOTH a '/from' and '/to' time, bro.");
+            throw new VeenException("An event needs BOTH a '/from' and '/to' time bro...");
         }
 
+        // Check if the user wrote /to before /from
+        if (fromIndex >= toIndex) {
+            throw new VeenException("Bro, '/from' must come BEFORE '/to' in your event!");
+        }
+
+        // Splitting the description of event, from time and to time
         String description = arguments.substring(0, fromIndex).trim();
         String from = arguments.substring(fromIndex + 5, toIndex).trim();
         String to = arguments.substring(toIndex + 3).trim();
+
+        // Handling edge cases
+        if (description.isEmpty()) {
+            throw new VeenException("The description of an event cannot be empty la bro.");
+        }
+        if (from.isEmpty()) {
+            throw new VeenException("Bro, you forgot to specify when the event starts!");
+        }
+        if (to.isEmpty()) {
+            throw new VeenException("Bro, you forgot to specify when the event ends!");
+        }
 
         tasks[totalTasks] = new Event(description, from, to);
         echoTask(tasks[totalTasks]);
@@ -191,7 +219,7 @@ public class Veen {
     }
 
     // Mark the Task with X
-    private static void markTask(String argument) {
+    private static void markTask(String argument) throws VeenException {
         int taskNumber  = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
         // bound check
@@ -207,7 +235,7 @@ public class Veen {
     }
 
     // Remove the X from the Task
-    private static void unmarkTask(String argument) {
+    private static void unmarkTask(String argument) throws VeenException {
         int taskNumber = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
 
