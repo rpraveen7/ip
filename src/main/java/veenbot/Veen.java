@@ -54,7 +54,7 @@ public class Veen {
         String[] parts = input.split(" ", 2);
 
         // The first part is always the command
-        String command = parts[0];
+        String command = parts[0].toLowerCase();
 
         // Check if there is a second part
         String arguments = parts.length > 1 ? parts[1] : "";
