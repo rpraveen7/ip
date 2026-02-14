@@ -1,4 +1,4 @@
-package veenbot;
+package veenbot.exceptions;
 
 public class VeenException extends Exception {
     public VeenException(String message) {
