@@ -13,7 +13,7 @@ public class Ui {
 
     // Welcome message for Veen bot's logo
     public static void showWelcomeMessage() {
-        String logo = " __     __  ________  ________  __    __ \n"
+        String logo = " __     __  ________  ________  __    __\n"
                 + "|  \\   |  \\|        \\|        \\|  \\  |  \\\n"
                 + "| \\\\   | \\\\| $$$$$$$$| $$$$$$$$| $$\\ | $$\n"
                 + "| $$   | $$| $$__    | $$__    | $$$\\| $$\n"

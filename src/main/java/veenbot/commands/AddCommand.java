@@ -50,7 +50,6 @@ public class AddCommand extends Command {
         return new Todo(arguments.trim());
     }
 
-
      // Creates a Deadline task
     private Task createDeadline(String arguments) throws VeenException {
         if (arguments.trim().isEmpty()) {

@@ -13,18 +13,28 @@ then
 fi
 
 # compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/veenbot/*.java ../src/main/java/veenbot/tasks/*.java
+if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/veenbot/*.java \
+  ../src/main/java/veenbot/tasks/*.java \
+  ../src/main/java/veenbot/commands/*.java \
+  ../src/main/java/veenbot/core/*.java \
+  ../src/main/java/veenbot/exceptions/*.java
 then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Veen < input.txt > ACTUAL.TXT
+java -classpath ../bin veenbot.Veen < input.txt > ACTUAL.TXT
 
 # convert to UNIX format
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
-dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
+if command -v dos2unix &> /dev/null; then
+    dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
+else
+    # macOS alternative using tr to remove carriage returns
+    tr -d '\r' < ACTUAL.TXT > ACTUAL-TEMP.TXT && mv ACTUAL-TEMP.TXT ACTUAL.TXT
+    tr -d '\r' < EXPECTED-UNIX.TXT > EXPECTED-TEMP.TXT && mv EXPECTED-TEMP.TXT EXPECTED-UNIX.TXT
+fi
 
 # compare the output to the expected output
 diff ACTUAL.TXT EXPECTED-UNIX.TXT
