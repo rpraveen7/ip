@@ -16,8 +16,13 @@ public class TaskManager {
     }
 
     // Adds task to the list
-    public void addTask(Task task) throws VeenException {
+    public void addTask(Task task) {
         tasks.add(task);
+    }
+
+    // Delete task
+    public Task deleteTask(int index) {
+        return tasks.remove(index);
     }
 
     // Gets task at specific index (0-based)

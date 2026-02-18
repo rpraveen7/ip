@@ -1,13 +1,10 @@
 package veenbot.core;
 
-// This class handles all the printing and inputs
-
 import java.util.ArrayList;
 
-import veenbot.exceptions.VeenException;
 import veenbot.tasks.Task;
 
-
+// This class handles all the printing and inputs
 
 public class Ui {
     // Divider message to separate inputs and outputs
@@ -70,7 +67,6 @@ public class Ui {
         System.out.println(DIVIDER);
     }
 
-
     // Shows an error message
     public static void showError(String message) {
         System.out.println(DIVIDER);
@@ -78,4 +74,11 @@ public class Ui {
         System.out.println(DIVIDER);
     }
 
+    public static void showDeleteMessage (Task task, int currentTotal) {
+        System.out.println(DIVIDER);
+        System.out.println("Noted bro :) I've removed this task:");
+        System.out.println("    " + task);
+        System.out.println("Good job bro!!! Now you have " + currentTotal + " tasks in the list.");
+        System.out.println(DIVIDER);
+    }
 }
