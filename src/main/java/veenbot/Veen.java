@@ -2,6 +2,7 @@ package veenbot;
 
 import veenbot.commands.Command;
 import veenbot.core.Parser;
+import veenbot.core.Storage;
 import veenbot.core.TaskManager;
 import veenbot.core.Ui;
 import veenbot.exceptions.VeenException;
@@ -11,12 +12,18 @@ import java.util.Scanner;
 public class Veen {
 
     private final TaskManager taskManager;
-    private final Ui ui;
+    private final Storage storage;
 
     // Constructor for Veen
     public Veen() {
         taskManager = new TaskManager();
-        ui = new Ui();
+        storage = new Storage("data/veen.txt");
+
+        try {
+            storage.load(taskManager); // Load existing data on startup
+        } catch (VeenException e) {
+            Ui.showError(e.getMessage());
+        }
     }
 
     // Runs the chatbot
@@ -30,7 +37,7 @@ public class Veen {
             try {
                 String input = scanner.nextLine();
                 Command command = Parser.parseCommand(input);  // Parse input → Command
-                command.execute(taskManager, ui);               // Execute command
+                command.execute(taskManager, storage);               // Execute command
                 isRunning = !command.isExit();                  // Check if exit
 
             } catch (VeenException e) {

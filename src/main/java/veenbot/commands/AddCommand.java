@@ -1,5 +1,6 @@
 package veenbot.commands;
 
+import veenbot.core.Storage;
 import veenbot.core.TaskManager;
 import veenbot.core.Ui;
 import veenbot.exceptions.VeenException;
@@ -21,7 +22,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskManager taskManager, Ui ui) throws VeenException {
+    public void execute(TaskManager taskManager, Storage storage) throws VeenException {
         Task task;
 
         switch (taskType) {
@@ -40,6 +41,7 @@ public class AddCommand extends Command {
 
         taskManager.addTask(task);
         Ui.showTaskAdded(task, taskManager.getSize());
+        storage.save(taskManager.getAllTasks());
     }
 
     // Creates a Todo task
