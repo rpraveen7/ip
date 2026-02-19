@@ -1,3 +1,0 @@
-T | 0 | run
-T | 1 | jump
-D | 0 | finish lec | Sunday

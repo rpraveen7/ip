@@ -3,6 +3,7 @@ package veenbot.core;
 import veenbot.exceptions.VeenException;
 import veenbot.tasks.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
@@ -13,7 +14,7 @@ public class Storage {
     }
 
     // SAVING: Wipes the file and writes the current snapshot of tasks
-    public void save(Task[] tasks) throws VeenException {
+    public void save(ArrayList<Task> tasks) throws VeenException {
         try {
             File f = new File(filePath);
             if (f.getParentFile() != null && !f.getParentFile().exists()) {
