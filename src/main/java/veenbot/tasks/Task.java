@@ -27,6 +27,8 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public abstract String toFileFormat();
+
     // Override toString to return the string representation of the object
     @Override
     public String toString() {

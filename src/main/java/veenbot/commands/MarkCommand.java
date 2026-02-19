@@ -1,5 +1,6 @@
 package veenbot.commands;
 
+import veenbot.core.Storage;
 import veenbot.core.TaskManager;
 import veenbot.core.Ui;
 import veenbot.exceptions.VeenException;
@@ -8,8 +9,8 @@ import veenbot.tasks.Task;
 //Command to mark or unmark a task
 
 public class MarkCommand extends Command {
-    private String argument;
-    private boolean isDone;  // true = mark, false = unmark
+    private final String argument;
+    private final boolean isDone;  // true = mark, false = unmark
 
     // Constructor for MarkCommand
     public MarkCommand(String argument, boolean isDone) {
@@ -18,7 +19,7 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskManager taskManager, Ui ui) throws VeenException {
+    public void execute(TaskManager taskManager, Storage storage) throws VeenException {
         int taskNumber = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
 
@@ -31,6 +32,7 @@ public class MarkCommand extends Command {
         }
 
         Ui.showTaskMarked(task, isDone);
+        storage.save(taskManager.getAllTasks());
     }
 
     @Override
