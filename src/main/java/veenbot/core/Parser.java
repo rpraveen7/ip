@@ -2,6 +2,7 @@ package veenbot.core;
 
 import veenbot.commands.AddCommand;
 import veenbot.commands.Command;
+import veenbot.commands.DeleteCommand;
 import veenbot.commands.ExitCommand;
 import veenbot.commands.ListCommand;
 import veenbot.commands.MarkCommand;
@@ -43,6 +44,18 @@ public class Parser {
 
         case "event":
             return new AddCommand("event", arguments);
+
+        case "delete":
+            if (arguments.isEmpty()) {
+                throw new VeenException("You gotta tell me which number to delete bro!!!");
+            }
+            try {
+                // Convert string "3" to int 3, then subtract 1 for zero-based index
+                int index = Integer.parseInt(arguments) - 1;
+                return new DeleteCommand(index);
+            } catch (NumberFormatException e) {
+                throw new VeenException("That's not a number bro!!! Try something like 'delete 1'.");
+            }
 
         default:
             throw new VeenException("BROOOO!! What is thaaaat? I don't know that command!");
