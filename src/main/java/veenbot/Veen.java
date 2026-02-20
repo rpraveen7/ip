@@ -29,6 +29,7 @@ public class Veen {
     // Runs the chatbot
     public void run() {
         Ui.showWelcomeMessage();
+        Ui.showLoadMessage(taskManager.getSize());
 
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
