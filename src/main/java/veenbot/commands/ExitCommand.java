@@ -7,7 +7,7 @@ import veenbot.core.Ui;
 public class ExitCommand extends Command {
 
     @Override
-    public void execute(TaskManager taskManager, Storage storage) {
+    public void execute(TaskManager taskManager, Ui ui, Storage storage) {
         // Nothing to do -> just exit
         // The goodbye message is handled in main
     }

@@ -13,43 +13,42 @@ public class Veen {
 
     private final TaskManager taskManager;
     private final Storage storage;
+    private Ui ui;
 
     // Constructor for Veen
     public Veen() {
+        ui = new Ui();
         taskManager = new TaskManager();
         storage = new Storage("data/veen.txt");
 
         try {
             storage.load(taskManager); // Load existing data on startup
         } catch (VeenException e) {
-            Ui.showError(e.getMessage());
+            ui.showError(e.getMessage());
         }
     }
 
     // Runs the chatbot
     public void run() {
-        Ui.showWelcomeMessage();
-        Ui.showLoadMessage(taskManager.getSize());
+        ui.showWelcomeMessage();
+        ui.showLoadMessage(taskManager.getSize());
 
-        Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
 
         while (isRunning) {
             try {
-                String input = scanner.nextLine();
+                String input = ui.readCommand();
                 Command command = Parser.parseCommand(input);  // Parse input → Command
-                command.execute(taskManager, storage);               // Execute command
+                command.execute(taskManager, ui, storage);               // Execute command
                 isRunning = !command.isExit();                  // Check if exit
 
             } catch (VeenException e) {
-                Ui.showError(e.getMessage());
+                ui.showError(e.getMessage());
             } catch (NumberFormatException e) {
-                Ui.showError("I need a number to mark/unmark things, not words!");
+                ui.showError("I need a number to mark/unmark things, not words!");
             }
         }
-
-        scanner.close();
-        Ui.printGoodbyeMessage();
+        ui.printGoodbyeMessage();
     }
 
     // Main entry point

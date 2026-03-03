@@ -19,7 +19,7 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskManager taskManager, Storage storage) throws VeenException {
+    public void execute(TaskManager taskManager, Ui ui, Storage storage) throws VeenException {
         int taskNumber = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
 
@@ -31,7 +31,7 @@ public class MarkCommand extends Command {
             task.markAsUndone();
         }
 
-        Ui.showTaskMarked(task, isDone);
+        ui.showTaskMarked(task, isDone);
         storage.save(taskManager.getAllTasks());
     }
 

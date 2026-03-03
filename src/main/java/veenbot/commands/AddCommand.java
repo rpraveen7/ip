@@ -22,7 +22,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskManager taskManager, Storage storage) throws VeenException {
+    public void execute(TaskManager taskManager, Ui ui, Storage storage) throws VeenException {
         Task task;
 
         switch (taskType) {
@@ -40,7 +40,7 @@ public class AddCommand extends Command {
         }
 
         taskManager.addTask(task);
-        Ui.showTaskAdded(task, taskManager.getSize());
+        ui.showTaskAdded(task, taskManager.getSize());
         storage.save(taskManager.getAllTasks());
     }
 

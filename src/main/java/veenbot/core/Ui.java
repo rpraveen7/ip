@@ -1,17 +1,29 @@
 package veenbot.core;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import veenbot.tasks.Task;
 
 // This class handles all the printing and inputs
 
 public class Ui {
+
+    private final Scanner scanner;
+
+    public Ui() {
+        this.scanner = new Scanner(System.in);
+    }
+
+    public String readCommand() {
+        return scanner.nextLine();
+    }
+
     // Divider message to separate inputs and outputs
-    public static final String DIVIDER = "____________________________________________________________________";
+    public final String DIVIDER = "____________________________________________________________________";
 
     // Welcome message for Veen bot's logo
-    public static void showWelcomeMessage() {
+    public void showWelcomeMessage() {
         String logo = " __     __  ________  ________  __    __\n"
                 + "|  \\   |  \\|        \\|        \\|  \\  |  \\\n"
                 + "| \\\\   | \\\\| $$$$$$$$| $$$$$$$$| $$\\ | $$\n"
@@ -29,14 +41,14 @@ public class Ui {
     }
 
     // Goodbye message
-    public static void printGoodbyeMessage() {
+    public void printGoodbyeMessage() {
         System.out.println(DIVIDER);
         System.out.println("Bye bro :) Hope to see you again soon!");
         System.out.println(DIVIDER);
     }
 
     // Message used for when Task added
-    public static void showTaskAdded(Task task, int totalTasks) {
+    public void showTaskAdded(Task task, int totalTasks) {
         System.out.println(DIVIDER);
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + task);
@@ -46,7 +58,7 @@ public class Ui {
     }
 
     // Message for printing of task when list command input
-    public static void showTaskList(ArrayList<Task> tasks) {
+    public void showTaskList(ArrayList<Task> tasks) {
         System.out.println(DIVIDER);
 
         //Check if the list is empty before printing
@@ -63,7 +75,7 @@ public class Ui {
     }
 
     // Shows a message when Task is marked/unmarked
-    public static void showTaskMarked(Task task, boolean isDone) {
+    public void showTaskMarked(Task task, boolean isDone) {
         System.out.println(DIVIDER);
         if (isDone) {
             System.out.println("Nice! I've marked this task as done bro:");
@@ -75,13 +87,13 @@ public class Ui {
     }
 
     // Shows an error message
-    public static void showError(String message) {
+    public void showError(String message) {
         System.out.println(DIVIDER);
         System.out.println("OOPS!!! " + message);
         System.out.println(DIVIDER);
     }
 
-    public static void showDeleteMessage (Task task, int currentTotal) {
+    public void showDeleteMessage (Task task, int currentTotal) {
         System.out.println(DIVIDER);
         System.out.println("Noted bro :) I've removed this task:");
         System.out.println("    " + task);
@@ -93,7 +105,7 @@ public class Ui {
     }
 
     // Message to show how many tasks were loaded on startup
-    public static void showLoadMessage(int totalTasks) {
+    public void showLoadMessage(int totalTasks) {
         String taskWord = (totalTasks == 1) ? "task" : "tasks";
         System.out.println("You currently have " + totalTasks + " " + taskWord + " saved bro!");
         System.out.println(DIVIDER);

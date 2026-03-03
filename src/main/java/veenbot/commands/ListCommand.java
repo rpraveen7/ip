@@ -7,8 +7,8 @@ import veenbot.core.Ui;
 public class ListCommand extends Command {
 
     @Override
-    public void execute(TaskManager taskManager, Storage storage) {
-        Ui.showTaskList(taskManager.getAllTasks());
+    public void execute(TaskManager taskManager, Ui ui, Storage storage) {
+        ui.showTaskList(taskManager.getAllTasks());
     }
 
     @Override
