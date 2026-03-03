@@ -20,7 +20,7 @@ public class DeleteCommand extends Command {
         }
         Task removed = taskManager.deleteTask(index);
         ui.showDeleteMessage(removed, taskManager.getSize());
-        storage.save(taskManager.getAllTasks());
+        storage.save(taskManager);
     }
 
     @Override

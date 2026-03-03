@@ -34,8 +34,4 @@ public class TaskManager {
     public int getSize() {
         return tasks.size();
     }
-
-    public ArrayList<Task> getAllTasks() {
-        return tasks;
-    }
 }

@@ -1,9 +1,9 @@
 package veenbot.core;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import veenbot.tasks.Task;
+import veenbot.exceptions.VeenException;
 
 // This class handles all the printing and inputs
 
@@ -58,17 +58,17 @@ public class Ui {
     }
 
     // Message for printing of task when list command input
-    public void showTaskList(ArrayList<Task> tasks) {
+    public void showTaskList(TaskManager taskManager) throws VeenException {
         System.out.println(DIVIDER);
 
         //Check if the list is empty before printing
-        if (tasks.isEmpty()) {
+        if (taskManager.getSize() == 0) {
             System.out.println("Solid bro!! You have no tasks left!!");
         } else {
             System.out.println("Here are the tasks in your list bro:");
-            for (int i = 0; i < tasks.size(); i++) {
+            for (int i = 0; i < taskManager.getSize(); i++) {
                 // cleaner code due to overriding toString
-                System.out.println((i + 1) + "." + tasks.get(i));
+                System.out.println((i + 1) + "." + taskManager.getTask(i));
             }
         }
         System.out.println(DIVIDER);

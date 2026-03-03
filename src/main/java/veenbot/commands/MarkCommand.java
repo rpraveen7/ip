@@ -32,7 +32,7 @@ public class MarkCommand extends Command {
         }
 
         ui.showTaskMarked(task, isDone);
-        storage.save(taskManager.getAllTasks());
+        storage.save(taskManager);
     }
 
     @Override

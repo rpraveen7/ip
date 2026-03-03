@@ -41,7 +41,7 @@ public class AddCommand extends Command {
 
         taskManager.addTask(task);
         ui.showTaskAdded(task, taskManager.getSize());
-        storage.save(taskManager.getAllTasks());
+        storage.save(taskManager);
     }
 
     // Creates a Todo task
