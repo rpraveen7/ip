@@ -27,6 +27,9 @@ public class TaskManager {
 
     // Gets task at specific index (0-based)
     public Task getTask(int index) throws VeenException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new VeenException("Task index" + (index + 1) + " is out of bounds bro.");
+        }
         return tasks.get(index);
     }
 

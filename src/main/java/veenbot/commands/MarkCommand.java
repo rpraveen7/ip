@@ -23,6 +23,10 @@ public class MarkCommand extends Command {
         int taskNumber = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
 
+        if (arrayIndex < 0 || arrayIndex >= taskManager.getSize()) {
+            throw new VeenException("That task number doesn't exist in your list bro!");
+        }
+
         Task task = taskManager.getTask(arrayIndex);
 
         if (isDone) {
