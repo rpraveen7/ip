@@ -114,7 +114,7 @@ public class Ui {
         System.out.println(DIVIDER);
     }
 
-    public void showTasksOnDate(TaskManager taskManager, LocalDate date) throws VeenException {
+    public void showFoundTasksOnDate(TaskManager taskManager, LocalDate date) throws VeenException {
         System.out.println(DIVIDER);
         String formattedDate = date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
         boolean found = false;
@@ -134,5 +134,27 @@ public class Ui {
             System.out.println("Solid bro!! You have no tasks on " + formattedDate + "!!");
         }
         System.out.println(DIVIDER);
+    }
+
+
+    // Searches the task manager for tasks containing the keyword and prints them.
+    public void showFoundWordTasks(TaskManager taskManager, String keyword) throws VeenException {
+        System.out.println(DIVIDER);
+        boolean isFound = false;
+        int displayIndex = 1;
+             for (int i = 0; i < taskManager.getSize(); i++) {
+                 Task task = taskManager.getTask(i);
+                 // We check if the task description contains the keyword (case-insensitive search is better)
+                 if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                     if (!isFound) {
+                         System.out.println("Here are the matching tasks in your list bro:");
+                         isFound = true;
+                     }
+                     System.out.println(displayIndex + "." + task);
+                     displayIndex++;
+                 }
+             }if (!isFound) {
+                 System.out.println("I couldn't find any tasks with '" + keyword + "' bro.");
+             }System.out.println(DIVIDER);
     }
 }
