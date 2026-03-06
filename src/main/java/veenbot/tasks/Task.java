@@ -1,5 +1,7 @@
 package veenbot.tasks;
 
+import java.time.LocalDate;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -28,6 +30,12 @@ public abstract class Task {
     }
 
     public abstract String toFileFormat();
+
+    // Checks if the task occurs on the specified date
+    // Default is false (e.g Todo will be false)
+    public boolean isOnDate(LocalDate date) {
+        return false;
+    }
 
     // Override toString to return the string representation of the object
     @Override

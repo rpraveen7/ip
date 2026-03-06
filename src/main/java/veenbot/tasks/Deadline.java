@@ -1,5 +1,6 @@
 package veenbot.tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import veenbot.core.DateParser;
 
@@ -15,6 +16,12 @@ public class Deadline extends Task {
         this.dateTime = DateParser.parseFullDate(by);
         // If it is not a full date, check if it contains a 4 digit time
         this.timeOnly = (this.dateTime == null) ? DateParser.parseTimeOnly(by) : null;
+    }
+
+    @Override
+    public boolean isOnDate(LocalDate date) {
+        // If dateTime is null, it was a plain string like "Sunday"
+        return dateTime != null && dateTime.toLocalDate().equals(date);
     }
 
     @Override

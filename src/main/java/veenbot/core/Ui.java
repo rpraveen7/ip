@@ -1,5 +1,8 @@
 package veenbot.core;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import veenbot.tasks.Task;
@@ -108,6 +111,28 @@ public class Ui {
     public void showLoadMessage(int totalTasks) {
         String taskWord = (totalTasks == 1) ? "task" : "tasks";
         System.out.println("You currently have " + totalTasks + " " + taskWord + " saved bro!");
+        System.out.println(DIVIDER);
+    }
+
+    public void showTasksOnDate(TaskManager taskManager, LocalDate date) throws VeenException {
+        System.out.println(DIVIDER);
+        String formattedDate = date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        boolean found = false;
+        int count = 1;
+        for (int i = 0; i < taskManager.getSize(); i++) {
+            Task task = taskManager.getTask(i);
+            if (task.isOnDate(date)) {
+                if (!found) {
+                    System.out.println("Here are the tasks happening on " + formattedDate + " bro:");
+                    found = true;
+                }
+                System.out.println(count + "." + task);
+                count++;
+            }
+        }
+        if (!found) {
+            System.out.println("Solid bro!! You have no tasks on " + formattedDate + "!!");
+        }
         System.out.println(DIVIDER);
     }
 }
