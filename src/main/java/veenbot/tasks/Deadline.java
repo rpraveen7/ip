@@ -1,40 +1,20 @@
 package veenbot.tasks;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import veenbot.core.DateParser;
 
 public class Deadline extends Task {
 
     protected String by;
     protected LocalDateTime dateTime;
-
-    // We define multiple formats we want to support
-    private static final DateTimeFormatter[] FORMATTERS = {
-        DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
-        DateTimeFormatter.ofPattern("d/M/yyyy HHmm"),
-        DateTimeFormatter.ofPattern("yyyy-MM-dd") // Handles date only
-    };
+    protected String timeOnly; // Added this to make the bot detect when we input just 24h time
 
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
-        this.dateTime = parseDate(by);
-    }
-
-    private LocalDateTime parseDate(String input) {
-        for (DateTimeFormatter formatter : FORMATTERS) {
-            try {
-                // If it's just a date (yyyy-MM-dd), we add 00:00 as the time
-                if (!input.contains(" ")) {
-                    return java.time.LocalDate.parse(input).atStartOfDay();
-                }
-                return LocalDateTime.parse(input, formatter);
-            } catch (DateTimeParseException ignored) {
-                // Try next formatter
-            }
-        }
-        return null; // Not a recognized date format, treated as plain String
+        this.dateTime = DateParser.parseFullDate(by);
+        // If it is not a full date, check if it contains a 4 digit time
+        this.timeOnly = (this.dateTime == null) ? DateParser.parseTimeOnly(by) : null;
     }
 
     @Override
@@ -44,7 +24,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        String displayBy = (dateTime != null) ? dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a")) : by;
-        return "[D]" + super.toString() + " (by: " + displayBy + ")";
+        String display = DateParser.getDisplayString(by, dateTime, timeOnly);
+        return "[D]" + super.toString() + " (by: " + display + ")";
     }
 }
