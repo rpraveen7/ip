@@ -14,7 +14,7 @@ public class FindDateCommand extends Command {
     @Override
     public void execute(TaskManager taskManager, Ui ui, Storage storage) throws VeenException {
         // We pass the taskManager directly to the UI
-        ui.showTasksOnDate(taskManager, searchDate);
+        ui.showFoundTasksOnDate(taskManager, searchDate);
     }
     @Override
     public boolean isExit() {
