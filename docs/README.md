@@ -20,6 +20,7 @@ What can I do for you?
 
 Veen is a lightweight, command-line interface (CLI) task manager designed to help you stay organized without any "bloat." It’s efficient, easy to use, and saves your tasks
 automatically so you can pick up exactly where you left off.
+
 ---
 
 ## Quick Start
@@ -29,6 +30,7 @@ automatically so you can pick up exactly where you left off.
 3.  Open your terminal/command prompt and navigate to the folder containing the file.
 4.  Run the command: `java -jar ip.jar`
 5.  Wait for the Veen logo to appear—you're ready to start managing tasks, bro!
+
 ---
 
 ## Features
@@ -50,6 +52,7 @@ Add a task with a specific "by" date or time.
 Add a task with a start and end time.
 *   **Format:** `event <description> /from <start> /to <end>`
 *   **Example:** `event project meeting /from 2026-03-05 1400 /to 1600`
+
 ---
 ### 2. Viewing Your Tasks
 See everything you have on your plate.
@@ -64,6 +67,7 @@ Search for tasks by a specific keyword in their description.
 Search for all tasks happening on a specific date.
 *   **Format:** `finddate <yyyy-MM-dd>`
 *   **Example:** `finddate 2026-03-05`
+
 ---
 ### 3. Managing Tasks
 Update your progress or clean up your list.
@@ -75,9 +79,11 @@ Mark a task as completed or incomplete using its index number from the `list`.
 Remove a task from your list permanently.
 *   **Format:** `delete <index>`
 *   **Example:** `delete 2`
+
 ---
 ### 4. Exiting Veen
 Safely close the application.
 *   **Command:** `bye`
 *   *Note: Your tasks are automatically saved to `data/veen.txt` every time you make a change!*
+
 ---
