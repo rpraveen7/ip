@@ -1,12 +1,27 @@
 package veenbot.tasks;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import veenbot.core.DateParser;
+
 public class Deadline extends Task {
 
     protected String by;
+    protected LocalDateTime dateTime;
+    protected String timeOnly; // Added this to make the bot detect when we input just 24h time
 
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
+        this.dateTime = DateParser.parseFullDate(by);
+        // If it is not a full date, check if it contains a 4 digit time
+        this.timeOnly = (this.dateTime == null) ? DateParser.parseTimeOnly(by) : null;
+    }
+
+    @Override
+    public boolean isOnDate(LocalDate date) {
+        // If dateTime is null, it was a plain string like "Sunday"
+        return dateTime != null && dateTime.toLocalDate().equals(date);
     }
 
     @Override
@@ -16,6 +31,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        String display = DateParser.getDisplayString(by, dateTime, timeOnly);
+        return "[D]" + super.toString() + " (by: " + display + ")";
     }
 }

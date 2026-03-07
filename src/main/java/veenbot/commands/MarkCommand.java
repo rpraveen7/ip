@@ -19,9 +19,13 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskManager taskManager, Storage storage) throws VeenException {
+    public void execute(TaskManager taskManager, Ui ui, Storage storage) throws VeenException {
         int taskNumber = Integer.parseInt(argument);
         int arrayIndex = taskNumber - 1;
+
+        if (arrayIndex < 0 || arrayIndex >= taskManager.getSize()) {
+            throw new VeenException("That task number doesn't exist in your list bro!");
+        }
 
         Task task = taskManager.getTask(arrayIndex);
 
@@ -31,8 +35,8 @@ public class MarkCommand extends Command {
             task.markAsUndone();
         }
 
-        Ui.showTaskMarked(task, isDone);
-        storage.save(taskManager.getAllTasks());
+        ui.showTaskMarked(task, isDone);
+        storage.save(taskManager);
     }
 
     @Override

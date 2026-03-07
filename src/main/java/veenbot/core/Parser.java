@@ -1,9 +1,13 @@
 package veenbot.core;
 
+import java.time.LocalDate;
+
 import veenbot.commands.AddCommand;
 import veenbot.commands.Command;
 import veenbot.commands.DeleteCommand;
 import veenbot.commands.ExitCommand;
+import veenbot.commands.FindDateCommand;
+import veenbot.commands.FindWordCommand;
 import veenbot.commands.ListCommand;
 import veenbot.commands.MarkCommand;
 import veenbot.exceptions.VeenException;
@@ -57,6 +61,19 @@ public class Parser {
                 throw new VeenException("That's not a number bro!!! Try something like 'delete 1'.");
             }
 
+        case "finddate":
+            try {
+                LocalDate date = LocalDate.parse(arguments.trim());
+                return new FindDateCommand(date);
+            } catch (java.time.format.DateTimeParseException e) {
+                throw new VeenException("Bro, tell me the date in yyyy-mm-dd format (e.g., finddate 2026-03-04)");
+            }
+
+        case "find":
+            if (arguments.trim().isEmpty()) {
+                throw new VeenException("What am I supposed to find? Give me a keyword bro!");
+            }
+            return new FindWordCommand(arguments.trim());
         default:
             throw new VeenException("BROOOO!! What is thaaaat? I don't know that command!");
         }
