@@ -1,9 +1,11 @@
 package veenbot.commands;
-
 import veenbot.core.Storage;
 import veenbot.core.TaskManager;
 import veenbot.core.Ui;
 
+/**
+ * Command to gracefully shut down the chatbot application.
+ */
 public class ExitCommand extends Command {
 
     @Override

@@ -1,5 +1,4 @@
 package veenbot;
-
 import veenbot.commands.Command;
 import veenbot.core.Parser;
 import veenbot.core.Storage;
@@ -7,15 +6,19 @@ import veenbot.core.TaskManager;
 import veenbot.core.Ui;
 import veenbot.exceptions.VeenException;
 
-import java.util.Scanner;
-
+/**
+ * Main class for the Veen chatbot.
+ * Initializes the bot's core components and manages the main execution loop.
+ */
 public class Veen {
 
     private final TaskManager taskManager;
     private final Storage storage;
     private Ui ui;
-
-    // Constructor for Veen
+    /**
+     * Constructs a new Veen instance.
+     * Initializes the UI, TaskManager, and Storage, and loads existing data.
+     */
     public Veen() {
         ui = new Ui();
         taskManager = new TaskManager();
@@ -27,8 +30,10 @@ public class Veen {
             ui.showError(e.getMessage());
         }
     }
-
-    // Runs the chatbot
+    /**
+     * Starts the main chatbot execution loop.
+     * Displays welcome messages and processes user commands until an exit command is issued.
+     */
     public void run() {
         ui.showWelcomeMessage();
         ui.showLoadMessage(taskManager.getSize());
@@ -50,8 +55,11 @@ public class Veen {
         }
         ui.printGoodbyeMessage();
     }
-
-    // Main entry point
+    /**
+     * Entry point of the application.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         new Veen().run();
     }

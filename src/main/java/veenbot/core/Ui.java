@@ -1,23 +1,28 @@
 package veenbot.core;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Scanner;
-
 import veenbot.tasks.Task;
 import veenbot.exceptions.VeenException;
 
-// This class handles all the printing and inputs
-
+/**
+ * Handles all user interactions for the Veen chatbot.
+ * Responsible for reading input and displaying formatted output messages to the console.
+ */
 public class Ui {
 
     private final Scanner scanner;
-
+    /**
+     * Constructs a Ui instance and initializes the system scanner.
+     */
     public Ui() {
         this.scanner = new Scanner(System.in);
     }
-
+    /**
+     * Reads the next line of input from the user.
+     *
+     * @return The raw string input entered by the user.
+     */
     public String readCommand() {
         return scanner.nextLine();
     }
@@ -25,7 +30,9 @@ public class Ui {
     // Divider message to separate inputs and outputs
     public final String DIVIDER = "____________________________________________________________________";
 
-    // Welcome message for Veen bot's logo
+    /**
+     * Displays the welcome logo and initial greeting messages.
+     */
     public void showWelcomeMessage() {
         String logo = " __     __  ________  ________  __    __\n"
                 + "|  \\   |  \\|        \\|        \\|  \\  |  \\\n"
@@ -43,14 +50,20 @@ public class Ui {
         System.out.println(DIVIDER);
     }
 
-    // Goodbye message
+    /**
+     * Displays the goodbye message when the user exits.
+     */
     public void printGoodbyeMessage() {
         System.out.println(DIVIDER);
         System.out.println("Bye bro :) Hope to see you again soon!");
         System.out.println(DIVIDER);
     }
-
-    // Message used for when Task added
+    /**
+     * Displays a confirmation message after a task is successfully added.
+     *
+     * @param task The task that was added.
+     * @param totalTasks The new total count of tasks in the list.
+     */
     public void showTaskAdded(Task task, int totalTasks) {
         System.out.println(DIVIDER);
         System.out.println("Got it. I've added this task:");
@@ -59,8 +72,12 @@ public class Ui {
         System.out.println("Now you have " + totalTasks + " " + taskWord + " in the list bro.");
         System.out.println(DIVIDER);
     }
-
-    // Message for printing of task when list command input
+    /**
+     * Prints all tasks currently stored in the TaskManager.
+     *
+     * @param taskManager The TaskManager containing the tasks to display.
+     * @throws VeenException If an error occurs while retrieving tasks.
+     */
     public void showTaskList(TaskManager taskManager) throws VeenException {
         System.out.println(DIVIDER);
 
@@ -76,8 +93,12 @@ public class Ui {
         }
         System.out.println(DIVIDER);
     }
-
-    // Shows a message when Task is marked/unmarked
+    /**
+     * Displays a message confirming that a task has been marked or unmarked.
+     *
+     * @param task The task that was modified.
+     * @param isDone True if the task was marked as done, false otherwise.
+     */
     public void showTaskMarked(Task task, boolean isDone) {
         System.out.println(DIVIDER);
         if (isDone) {
@@ -88,14 +109,22 @@ public class Ui {
         System.out.println("  " + task);
         System.out.println(DIVIDER);
     }
-
-    // Shows an error message
+    /**
+     * Displays an error message to the user.
+     *
+     * @param message The specific error message to be displayed.
+     */
     public void showError(String message) {
         System.out.println(DIVIDER);
         System.out.println("OOPS!!! " + message);
         System.out.println(DIVIDER);
     }
-
+    /**
+     * Displays a confirmation message after a task is deleted.
+     *
+     * @param task The task that was removed.
+     * @param currentTotal The remaining number of tasks in the list.
+     */
     public void showDeleteMessage (Task task, int currentTotal) {
         System.out.println(DIVIDER);
         System.out.println("Noted bro :) I've removed this task:");
@@ -106,14 +135,23 @@ public class Ui {
         System.out.println("Now you have " + currentTotal + " " + taskWord + " in the list bro.");
         System.out.println(DIVIDER);
     }
-
-    // Message to show how many tasks were loaded on startup
+    /**
+     * Displays a message showing how many tasks were loaded from storage.
+     *
+     * @param totalTasks The number of tasks loaded.
+     */
     public void showLoadMessage(int totalTasks) {
         String taskWord = (totalTasks == 1) ? "task" : "tasks";
         System.out.println("You currently have " + totalTasks + " " + taskWord + " saved bro!");
         System.out.println(DIVIDER);
     }
-
+    /**
+     * Displays all tasks that occur on a specific date.
+     *
+     * @param taskManager The TaskManager to search.
+     * @param date The date to filter tasks by.
+     * @throws VeenException If an error occurs while retrieving tasks.
+     */
     public void showFoundTasksOnDate(TaskManager taskManager, LocalDate date) throws VeenException {
         System.out.println(DIVIDER);
         String formattedDate = date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
@@ -135,9 +173,13 @@ public class Ui {
         }
         System.out.println(DIVIDER);
     }
-
-
-    // Searches the task manager for tasks containing the keyword and prints them.
+    /**
+     * Displays all tasks that contain a specific keyword in their description.
+     *
+     * @param taskManager The TaskManager to search.
+     * @param keyword The string to search for within task descriptions.
+     * @throws VeenException If an error occurs while retrieving tasks.
+     */
     public void showFoundWordTasks(TaskManager taskManager, String keyword) throws VeenException {
         System.out.println(DIVIDER);
         boolean isFound = false;

@@ -1,14 +1,21 @@
 package veenbot.commands;
-
 import veenbot.core.Storage;
 import veenbot.core.TaskManager;
 import veenbot.core.Ui;
 import veenbot.exceptions.VeenException;
 import veenbot.tasks.Task;
 
+/**
+ * Command to remove a task from the list based on its index.
+ */
 public class DeleteCommand extends Command {
-    private final int index;
 
+    private final int index;
+    /**
+     * Constructs a DeleteCommand for the task at the specified index.
+     *
+     * @param index The 0-based index of the task to be deleted.
+     */
     public DeleteCommand(int index) {
         this.index = index;
     }

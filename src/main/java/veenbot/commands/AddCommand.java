@@ -1,5 +1,4 @@
 package veenbot.commands;
-
 import veenbot.core.Storage;
 import veenbot.core.TaskManager;
 import veenbot.core.Ui;
@@ -9,13 +8,19 @@ import veenbot.tasks.Event;
 import veenbot.tasks.Task;
 import veenbot.tasks.Todo;
 
-// Command to add task (Todo, Deadline or Event)
-
+/**
+ * Command to add a new task (Todo, Deadline, or Event) to the list.
+ */
 public class AddCommand extends Command {
     private String taskType;   // "todo", "deadline", or "event"
     private String arguments;
 
-    // Constructor for AddCommand
+    /**
+     * Constructs an AddCommand with the specified task type and arguments.
+     *
+     * @param taskType The type of task ("todo", "deadline", or "event").
+     * @param arguments The raw argument string containing descriptions and dates.
+     */
     public AddCommand(String taskType, String arguments) {
         this.taskType = taskType;
         this.arguments = arguments;
@@ -38,13 +43,18 @@ public class AddCommand extends Command {
         default:
             throw new VeenException("Unknown task type: " + taskType);
         }
-
         taskManager.addTask(task);
         ui.showTaskAdded(task, taskManager.getSize());
         storage.save(taskManager);
     }
 
-    // Creates a Todo task
+    /**
+     * Creates a Todo task from the provided arguments.
+     *
+     * @param arguments The description of the todo.
+     * @return A new Todo task.
+     * @throws VeenException If the description is empty.
+     */
     private Task createTodo(String arguments) throws VeenException {
         if (arguments.trim().isEmpty()) {
             throw new VeenException("The description of a todo cannot be empty la bro.");
@@ -52,7 +62,14 @@ public class AddCommand extends Command {
         return new Todo(arguments.trim());
     }
 
-     // Creates a Deadline task
+    /**
+     * Creates a Deadline task from the provided arguments.
+     * Parses the "/by" separator to extract description and deadline timing.
+     *
+     * @param arguments The raw arguments string (e.g., "homework /by tomorrow").
+     * @return A new Deadline task.
+     * @throws VeenException If the description is empty or the "/by" separator is missing.
+     */
     private Task createDeadline(String arguments) throws VeenException {
         if (arguments.trim().isEmpty()) {
             throw new VeenException("The description of a deadline cannot be empty la bro.");
@@ -77,7 +94,14 @@ public class AddCommand extends Command {
         return new Deadline(description, by);
     }
 
-    // Creates an Event task
+    /**
+     * Creates an Event task from the provided arguments.
+     * Parses the "/from" and "/to" separators to extract timing details.
+     *
+     * @param arguments The raw arguments string (e.g., "party /from 2pm /to 4pm").
+     * @return A new Event task.
+     * @throws VeenException If components are missing or the order is incorrect.
+     */
     private Task createEvent(String arguments) throws VeenException {
         if (arguments.trim().isEmpty()) {
             throw new VeenException("The description of an event cannot be empty.");

@@ -1,9 +1,11 @@
 package veenbot.tasks;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import veenbot.core.DateParser;
 
+/**
+ * Represents a task that starts and ends at specific times.
+ */
 public class Event extends Task {
 
     protected String from;
@@ -12,7 +14,12 @@ public class Event extends Task {
     protected LocalDateTime toDate;
     protected String fromTimeOnly;
     protected String toTimeOnly;
-
+    /**
+     * Constructs an Event task with the given description, start time, and end time.
+     * @param description The description of the event.
+     * @param from The start time/date string.
+     * @param to The end time/date string.
+     */
     public Event(String description, String from, String to) {
         super(description);
         this.from = from;
