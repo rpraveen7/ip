@@ -4,12 +4,19 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import veenbot.core.DateParser;
 
+/**
+ * Represents a task with a specific deadline.
+ */
 public class Deadline extends Task {
 
     protected String by;
     protected LocalDateTime dateTime;
     protected String timeOnly; // Added this to make the bot detect when we input just 24h time
-
+    /**
+     * Constructs a Deadline task with the given description and deadline time.
+     * @param description The description of the deadline.
+     * @param by The deadline time/date string.
+     */
     public Deadline(String description, String by) {
         super(description);
         this.by = by;

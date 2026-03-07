@@ -1,7 +1,5 @@
 package veenbot.core;
-
 import java.time.LocalDate;
-
 import veenbot.commands.AddCommand;
 import veenbot.commands.Command;
 import veenbot.commands.DeleteCommand;
@@ -12,10 +10,16 @@ import veenbot.commands.ListCommand;
 import veenbot.commands.MarkCommand;
 import veenbot.exceptions.VeenException;
 
-// Parses converts user strings into command objects
-
+/**
+ * Interprets user input and converts it into executable Command objects.
+ */
 public class Parser {
-
+    /**
+     * Parses the raw user input string into a specific Command.
+     * @param input The full command string entered by the user.
+     * @return A Command object corresponding to the user's request.
+     * @throws VeenException If the input format is invalid or the command is unknown.
+     */
     public static Command parseCommand(String input) throws VeenException {
         String[] parts = input.trim().split(" ", 2);
         String commandWord = parts[0].toLowerCase();

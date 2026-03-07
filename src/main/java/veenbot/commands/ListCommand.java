@@ -1,10 +1,12 @@
 package veenbot.commands;
-
 import veenbot.core.Storage;
 import veenbot.core.TaskManager;
 import veenbot.core.Ui;
 import veenbot.exceptions.VeenException;
 
+/**
+ * Command to display all tasks currently in the list.
+ */
 public class ListCommand extends Command {
 
     @Override

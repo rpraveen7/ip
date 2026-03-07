@@ -1,19 +1,27 @@
 package veenbot.core;
-
 import veenbot.exceptions.VeenException;
 import veenbot.tasks.*;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles loading and saving tasks to a local file.
+ * Ensures data persistence between application sessions.
+ */
 public class Storage {
     private final String filePath;
-
+    /**
+     * Constructs a Storage instance with the specified file path.
+     * @param filePath The path to the file where tasks are saved.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
-
-    // SAVING: Wipes the file and writes the current snapshot of tasks
+    /**
+     * Saves the current list of tasks to the storage file.
+     * @param taskManager The TaskManager containing the tasks to save.
+     * @throws VeenException If an error occurs during the saving process.
+     */
     public void save(TaskManager taskManager) throws VeenException {
         try {
             File f = new File(filePath);
@@ -31,8 +39,11 @@ public class Storage {
             throw new VeenException("Saving failed: " + e.getMessage());
         }
     }
-
-    // LOADING: Reads the file and fills the TaskManager array
+    /**
+     * Loads tasks from the storage file into the TaskManager.
+     * @param taskManager The TaskManager to load tasks into.
+     * @throws VeenException If the file is not found or corrupted.
+     */
     public void load(TaskManager taskManager) throws VeenException {
         File f = new File(filePath);
         if (!f.exists()) return;

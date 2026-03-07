@@ -4,10 +4,17 @@ import veenbot.core.TaskManager;
 import veenbot.core.Ui;
 import veenbot.exceptions.VeenException;
 
-// Command to search for tasks containing a specific keyword.
+/**
+ * Command to find and display tasks that contain a specific keyword in their description.
+ */
 public class FindWordCommand extends Command {
-    private final String keyword;
 
+    private final String keyword;
+    /**
+     * Constructs a FindWordCommand with the given keyword.
+     *
+     * @param keyword The string to search for.
+     */
     public FindWordCommand(String keyword) {
         this.keyword = keyword;
     }

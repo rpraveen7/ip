@@ -1,12 +1,19 @@
 package veenbot.core;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Provides utility methods for parsing dates and times from strings.
+ * Supports multiple formats including "yyyy-MM-dd" and "HHmm".
+ */
 public class DateParser {
-    // Tries to parse full date/time like 2/12/2019 1800
+    /**
+     * Parses a full date and time string into a LocalDateTime object.
+     * @param input The date/time string to parse.
+     * @return The parsed LocalDateTime, or null if parsing fails.
+     */
     public static LocalDateTime parseFullDate(String input) {
         String[] patterns = {"d/M/yyyy HHmm", "yyyy-MM-dd HHmm", "yyyy-MM-dd"};
         for (String pattern : patterns) {
@@ -19,7 +26,11 @@ public class DateParser {
         }
         return null;
     }
-    // Tries to find "1800" at the end of a string like "Sunday 1800"
+    /**
+     * Extracts and formats time-only strings from user input.
+     * @param input The string containing a time (e.g., "1800").
+     * @return A formatted time string (e.g., "6:00 PM"), or null if no time found.
+     */
     public static String parseTimeOnly(String input) {
         String[] parts = input.split(" ");
         if (parts.length < 1) return null;
@@ -37,7 +48,13 @@ public class DateParser {
         } catch (DateTimeParseException ignored) {}
         return null;
     }
-    // Helper to format the display string for ANY task
+    /**
+     * Generates a display-friendly string for a date or time.
+     * @param original The original input string.
+     * @param dateTime The parsed LocalDateTime object (can be null).
+     * @param timeOnly The parsed time-only string (can be null).
+     * @return A formatted string for UI display.
+     */
     public static String getDisplayString(String original, LocalDateTime dateTime, String timeOnly) {
         if (dateTime != null) {
             return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, h:mm a"));
